@@ -1,21 +1,17 @@
 //https://nitro.unjs.io/config
 export default defineNitroConfig({
-  srcDir: "server",
-  // routeRules: {
-  //   "/api/**": {
-  //     proxy: {
-  //       to: "http://localhost:8080/api/**",
-  //       headers: {
-  //         "Access-Control-Allow-Origin": "*"
-  //         // "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-  //         // "Access-Control-Allow-Headers": "Content-Type, Authorization",
-  //       },
-  //     },
-  //   },
-  // },
-  // routeRules: {
-  //   "/api/**": {
-  //     cors: false
-  //   },
-  // },
+  // srcDir: "server",
+  serverAssets: [{
+    baseName: 'templates',
+    dir: './templates'
+  }],
+  noPublicDir: false,  // default
+  publicAssets: [
+    {
+      baseURL: "images",
+      dir: "public/images",
+      maxAge: 60 * 60 * 24 * 7, // 7 days
+    },
+  ],
+  compressPublicAssets: { gzip: true, brotli: true }
 });
