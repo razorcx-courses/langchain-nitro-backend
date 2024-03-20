@@ -4,10 +4,6 @@ export default defineEventHandler(async (event) => {
   const param1 = getRouterParam(event, "param");
   const slug = getRouterParam(event, "slug");
 
-  // const body = await readBody(event);
-
-  // console.log(event)
-
   const request = {
     method: event.method,
     pathname: url.pathname,
@@ -17,66 +13,51 @@ export default defineEventHandler(async (event) => {
     query,
     search: url.search,
     url: url.href,
-    // body
   };
 
   console.log(request);
-  // console.log(event.context.params);
 
-  const getTemplate = (name) => {
-    return useStorage("assets:templates").getItem(`${name}.html`);
+  // const getTemplate = (name) => {
+  //   return useStorage("assets:templates").getItem(`${name}.html`);
+  // };
+
+  const route = {
+    path: param1,
+    getTemplate: async () =>
+      await useStorage("assets:templates").getItem(`${param1}.html`),
+    slug,
+    getResponse: async () => $fetch(event.path.replace("langchain", "api")),
   };
 
-  const routes = [
-    {
-      path: "joke",
-      getTemplate: async () => await getTemplate("joke"),
-      slug,
-      getResponse: async () => $fetch("/api/joke/" + slug),
-    },
-    {
-      path: "prompts",
-      getTemplate: async () => await getTemplate("prompts"),
-      slug,
-    },
-  ];
-
   //get the route
-  const route = routes.find((route) =>
-    param1.toLowerCase().startsWith(route.path)
-  );
+  // const route = routes.find((route) =>
+  //   param1.toLowerCase().startsWith(route.path)
+  // );
 
-  //find the slug parameters(s)
-  let param2, param3;
-
-  if (slug) {
-    const params = slug.split("/");
-    if (params?.length > 0) {
-      param2 = params[0];
-    }
-    if (params?.length > 1) {
-      param3 = params[1];
-    }
-  }
-
-  console.log(param2, param3);
+  console.log(route);
 
   //api calls
 
   if (route) {
     const response = await route.getResponse();
-    const template = (await route.getTemplate()).toString();
+    let template = (await route.getTemplate()).toString();
+
+    console.log("API response:", response);
 
     if (response) {
-      const newTemplate = template
-        .replace("{{ setup }}", response?.setup)
-        .replace("{{ punchline }}", response?.punchline);
+      switch (route.path) {
+        case "joke":
+          template = template
+            .replace("{{ setup }}", response.setup)
+            .replace("{{ punchline }}", response.punchline);
+          break;
 
-      return newTemplate;
-    } else {
-      return template;
+        case "prompts":
+          template = template.replace("{{ response }}", response);
+          break;
+      }
     }
-  } else {
-    return { error: "Route not found.", request };
+
+    return template;
   }
 });
