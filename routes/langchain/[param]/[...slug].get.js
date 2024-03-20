@@ -17,22 +17,13 @@ export default defineEventHandler(async (event) => {
 
   console.log(request);
 
-  // const getTemplate = (name) => {
-  //   return useStorage("assets:templates").getItem(`${name}.html`);
-  // };
-
   const route = {
     path: param1,
     getTemplate: async () =>
-      await useStorage("assets:templates").getItem(`${param1}.html`),
+      await useStorage("assets:templates").getItem(`/langchain/${param1}.html`),
     slug,
     getResponse: async () => $fetch(event.path.replace("langchain", "api")),
   };
-
-  //get the route
-  // const route = routes.find((route) =>
-  //   param1.toLowerCase().startsWith(route.path)
-  // );
 
   console.log(route);
 
@@ -40,7 +31,7 @@ export default defineEventHandler(async (event) => {
 
   if (route) {
     const response = await route.getResponse();
-    let template = (await route.getTemplate()).toString();
+    let template = await route.getTemplate();
 
     console.log("API response:", response);
 

@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
   // console.log(event.context.params);
 
   const getTemplate = (name: string) => {
-    return useStorage("assets:templates").getItem(`${name}.html`);
+    return useStorage("assets:templates").getItem(`/pages/${name}.html`);
   };
 
   const routes = [
