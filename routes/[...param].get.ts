@@ -7,23 +7,15 @@ export default eventHandler(async (event) => {
     method: event.method,
     pathname: url.pathname,
     path: event.path,
-    param1: event.context.params.param,
+    param1,
     query,
     search: url.search,
     url: url.href,
   };
 
-  console.log(request);
+  console.log("Request:", request);
 
-  const route = {
-    path: param1,
-    getTemplate: async () =>
-      await useStorage("assets:templates").getItem(`/pages/${param1}.html`),
-  };
-  
-  if (route) {
-    return await route.getTemplate();
-  }
+  const template = await $fetch("/api/templates" + event.path);
 
-  return request;
+  return template;
 });
