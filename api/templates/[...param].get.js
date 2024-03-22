@@ -24,6 +24,10 @@ export default defineEventHandler(async (event) => {
       `/pages/${param1}.html`
     );
 
+    routeTemplate = routeTemplate
+      ? routeTemplate
+      : await useStorage("assets:templates").getItem(`/app/404.html`);
+
     appTemplate = appTemplate.replace("{{app}}", routeTemplate);
 
     console.log(appTemplate);

@@ -4,9 +4,8 @@ import { getJokeResponse } from "../../lib/jokes";
 export default defineEventHandler(async (event) => {
   try {
     const thing = getRouterParam(event, "thing");
-    // console.log(thing);
     const response = await getJokeResponse(thing);
-    // console.log(response);
+    console.log({ thing, response });
     return response;
   } catch (error) {
     throw createError({

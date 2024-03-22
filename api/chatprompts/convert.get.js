@@ -6,16 +6,18 @@ export default defineEventHandler(async (event) => {
 
   try {
     const { input_language, output_language, text } = getQuery(event);
-    console.log(input_language, output_language, text);
     const response = await useChatPromptTemplate(
       input_language,
       output_language,
       text
     );
+    
+    console.log({ input_language, output_language, text, response });
+
     message = response;
   } catch (e) {
     status = e.message;
   } finally {
-    return { message, status }
+    return { message, status };
   }
 });

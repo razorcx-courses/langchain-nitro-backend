@@ -9,6 +9,7 @@ export default defineEventHandler(async (event) => {
       adjective,
       noun
     );
+    console.log({ template, adjective, noun, response });
     return response;
   } catch (error) {
     return { "error:": error.message };

@@ -7,10 +7,11 @@ export default defineEventHandler(async (event) => {
   try {
     const { human } = getQuery(event);
     const response = await useFewShotPrompting(human);
-    message = response;
+    console.log(response);
+    message = response
   } catch (e) {
     status = e.message;
   } finally {
-    return { message, status };
+    return message;
   }
 });
