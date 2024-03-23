@@ -19,5 +19,6 @@ export default defineNitroConfig({
   runtimeConfig: {
     upstashRedisRestUrl: process.env.NUXT_UPSTASH_REDIS_REST_URL,
     upstashRedisRestToken: process.env.NUXT_UPSTASH_REDIS_REST_TOKEN,
+    apiKey: process.env.NUXT_API_KEY,
   },
 });
