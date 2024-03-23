@@ -5,8 +5,8 @@ export default defineEventHandler(async (event) => {
   let status = "success";
 
   try {
-    const { q } = getQuery(event);
-    const response = await usePipelinePrompt(q);
+    const { human } = getQuery(event);
+    const response = await usePipelinePrompt(human);
     message = response;
   } catch (e) {
     status = e.message;

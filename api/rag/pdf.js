@@ -5,9 +5,9 @@ export default defineEventHandler(async (event) => {
   let status = "success";
 
   try {
-    const docs = await readBody(event);
-    console.log(docs);
-    const response = await useRagWithPdf(docs, "Tell me about the document");
+    const { docs, prompt } = await readBody(event);
+    console.log(docs, prompt);
+    const response = await useRagWithPdf(docs, prompt);
     message = response;
   } catch (e) {
     status = e.message;
