@@ -16,11 +16,11 @@ export default defineEventHandler(async (event) => {
   console.log(request);
 
   try {
-    let appTemplate = await useStorage("assets:templates").getItem(
+    let appTemplate: any = await useStorage("assets:templates").getItem(
       `/app/base.html`
     );
 
-    let routeTemplate = await useStorage("assets:templates").getItem(
+    let routeTemplate: any = await useStorage("assets:templates").getItem(
       `/pages/${param1}.html`
     );
 

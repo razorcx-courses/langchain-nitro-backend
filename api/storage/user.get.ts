@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
     // const storage = await useStorage().getItem(key);
 
     const client = redisClient();
-    const redisResult = await client.get(key);
+    const redisResult: any  = await client.get(key);
 
     const { name } = redisResult;
 
