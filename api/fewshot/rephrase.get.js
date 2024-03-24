@@ -1,17 +1,13 @@
 import { useFewShotPrompting } from "../../lib/fewShotPrompts";
 
 export default defineEventHandler(async (event) => {
-  let message;
-  let status = "success";
-
   try {
     const { human } = getQuery(event);
-    const response = await useFewShotPrompting(human);
-    console.log(response);
-    message = response
+    return await useFewShotPrompting(human);
   } catch (e) {
-    status = e.message;
-  } finally {
-    return message;
+    return createError({
+      statusCode: 500,
+      statusMessage: "Server error",
+    });
   }
 });

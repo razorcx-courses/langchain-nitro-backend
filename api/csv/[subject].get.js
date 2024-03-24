@@ -4,9 +4,11 @@ import { useCsvListOutputParser } from "../../lib/csvListOutputParser";
 export default defineEventHandler(async (event) => {
   try {
     const subject = getRouterParam(event, "subject");
-    const response = await useCsvListOutputParser(subject);
-    return response;
+    return await useCsvListOutputParser(subject);
   } catch (error) {
-    return { "error:": error.message };
+    return createError({
+      statusCode: 500,
+      statusMessage: "Server error",
+    });
   }
 });

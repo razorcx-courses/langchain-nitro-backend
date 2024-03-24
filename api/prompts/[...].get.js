@@ -13,15 +13,12 @@ router
       try {
         const { template, adjective, noun } = getQuery(event);
         console.log(template, adjective, noun);
-        const response = await multiInputPromptTemplateExample(
-          template,
-          adjective,
-          noun
-        );
-        console.log("multi-input:", [template, adjective, noun, response]);
-        return response;
+        return await multiInputPromptTemplateExample(template, adjective, noun);
       } catch (error) {
-        return { "error:": error.message };
+        return createError({
+          statusCode: 500,
+          statusMessage: "Server error",
+        });
       }
     })
   )
@@ -30,14 +27,12 @@ router
     defineEventHandler(async (event) => {
       try {
         const { template, adjective } = getQuery(event);
-        const response = await oneInputPromptTemplateExample(
-          template,
-          adjective
-        );
-        console.log("one-input:", { template, adjective, response });
-        return response;
+        return await oneInputPromptTemplateExample(template, adjective);
       } catch (error) {
-        return { "error:": error.message };
+        return createError({
+          statusCode: 500,
+          statusMessage: "Server error",
+        });
       }
     })
   )
@@ -46,11 +41,12 @@ router
     defineEventHandler(async (event) => {
       try {
         const { template } = getQuery(event);
-        const response = await noInputPromptTemplateExample(template);
-        console.log("no-input:", { template, response });
-        return response;
+        return await noInputPromptTemplateExample(template);
       } catch (error) {
-        return { "error:": error.message };
+        return createError({
+          statusCode: 500,
+          statusMessage: "Server error",
+        });
       }
     })
   );

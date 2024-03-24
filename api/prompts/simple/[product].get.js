@@ -3,13 +3,11 @@ import { simplePromptTemplateExample } from "../../../lib/prompts";
 export default defineEventHandler(async (event) => {
   try {
     const product = getRouterParam(event, "product");
-    const response = await simplePromptTemplateExample(product);
-    console.log({ product, response });
-    return response;
+    return await simplePromptTemplateExample(product);
   } catch (error) {
-    throw createError({
-      statusText: "Simple prompt failed",
-      statusCode: 401,
+    return createError({
+      statusCode: 500,
+      statusMessage: "Server error",
     });
   }
 });

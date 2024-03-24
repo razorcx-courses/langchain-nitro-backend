@@ -1,16 +1,13 @@
-import { usePipelinePrompt  } from "../../lib/pipelinePrompts";
+import { usePipelinePrompt } from "../../lib/pipelinePrompts";
 
 export default defineEventHandler(async (event) => {
-  let message;
-  let status = "success";
-
   try {
     const { human } = getQuery(event);
-    const response = await usePipelinePrompt(human);
-    message = response;
+    return await usePipelinePrompt(human);
   } catch (e) {
-    status = e.message;
-  } finally {
-    return { message, status }
+    return createError({
+      statusCode: 500,
+      statusMessage: "Server error",
+    });
   }
 });

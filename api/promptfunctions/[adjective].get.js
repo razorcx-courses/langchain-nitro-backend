@@ -3,13 +3,11 @@ import { usePromptingWithFunctions } from "../../lib/promptFunctions";
 export default defineEventHandler(async (event) => {
   try {
     const adjective = getRouterParam(event, "adjective");
-    const response = await usePromptingWithFunctions(adjective);
-    console.log({ adjective, response });
-    return response;
+    return await usePromptingWithFunctions(adjective);
   } catch (error) {
-    throw createError({
-      statusText: "Joke Failed",
-      statusCode: 401,
+    return createError({
+      statusCode: 500,
+      statusMessage: "Server error",
     });
   }
 });

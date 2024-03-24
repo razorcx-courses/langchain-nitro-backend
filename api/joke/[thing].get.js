@@ -4,13 +4,11 @@ import { getJokeResponse } from "../../lib/jokes";
 export default defineEventHandler(async (event) => {
   try {
     const thing = getRouterParam(event, "thing");
-    const response = await getJokeResponse(thing);
-    console.log({ thing, response });
-    return response;
+    return await getJokeResponse(thing);
   } catch (error) {
-    throw createError({
-      statusText: "Joke Failed",
-      statusCode: 401,
+    return createError({
+      statusCode: 500,
+      statusMessage: "Server error",
     });
   }
 });

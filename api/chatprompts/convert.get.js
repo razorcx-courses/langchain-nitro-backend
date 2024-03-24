@@ -1,23 +1,13 @@
 import { useChatPromptTemplate } from "../../lib/chatPrompts";
 
 export default defineEventHandler(async (event) => {
-  let message;
-  let status = "success";
-
   try {
     const { input_language, output_language, text } = getQuery(event);
-    const response = await useChatPromptTemplate(
-      input_language,
-      output_language,
-      text
-    );
-    
-    console.log({ input_language, output_language, text, response });
-
-    message = response;
+    return await useChatPromptTemplate(input_language, output_language, text);
   } catch (e) {
-    status = e.message;
-  } finally {
-    return { message, status };
+    return createError({
+      statusCode: 500,
+      statusMessage: "Server error",
+    });
   }
 });
