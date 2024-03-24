@@ -10,9 +10,9 @@
     "nitropack": "latest"
   },
   "dependencies": {
-    "@langchain/community": "^0.0.40",
-    "@langchain/openai": "^0.0.21",
-    "@upstash/redis": "^1.28.4",
+    "@langchain/community": "^0.0.41",
+    "@langchain/openai": "^0.0.23",
+    "@upstash/redis": "^1.29.0",
     "langchain": "^0.1.28"
   }
 }
