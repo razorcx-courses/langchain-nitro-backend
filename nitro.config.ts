@@ -12,7 +12,7 @@ export default defineNitroConfig({
     {
       baseURL: "images",
       dir: "public/images",
-      maxAge: 60 * 60 * 24 * 7, // 7 days
+      //maxAge: 60 * 60 * 24 * 7, // 7 days
     },
   ],
   compressPublicAssets: { gzip: true, brotli: true },
@@ -20,5 +20,11 @@ export default defineNitroConfig({
     upstashRedisRestUrl: process.env.NUXT_UPSTASH_REDIS_REST_URL,
     upstashRedisRestToken: process.env.NUXT_UPSTASH_REDIS_REST_TOKEN,
     apiKey: process.env.NUXT_API_KEY,
+  },
+  storage: {
+    fs: {
+      driver: "fs",
+      base: "./uploads",
+    },
   },
 });
